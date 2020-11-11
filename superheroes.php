@@ -1,8 +1,8 @@
 <?php
 
 Header("Access-Control-Allow-Origin: *");
-Header('Access-Control-Allow-Headers: *');
-Header("Access-Control-Allow-Methods: GET, OPTIONS");
+Header("Access-Control-Allow-Headers: *");
+Header("Access-Control-Allow-Methods: *");
 
 $superheroes = [
   [
@@ -68,9 +68,27 @@ $superheroes = [
 ];
 
 ?>
+<?php if (isset($_POST['text'])):?>
+    <?php $var = $_POST['text'];
+    echo $var;
+    ?>
+    <?php if ($var):?>
+        <?php foreach ($superheroes as $superhero): ?>
+            <?php if ($superhero['name'] == $var or $superhero['alias'] == $var):?>
+                <h3><?= $superhero['alias']; ?></h3>
+                <h4><?= $superhero['name']; ?></h4>
+                <p><?= $superhero['biography']; ?></p>
+            <?php endif;?>
+        <?php endforeach; ?>
+    <?php elseif ($var == " "):?>
+        <?php foreach ($superheroes as $superhero): ?>
+        <ul>
+            <li><?= $superhero['alias']; ?></li>
+        </ul>
+        <?php endforeach;?>
+    <?php else:?>
+        <p><span style = "color:red">SUPERHERO NOT FOUND</span></p>
+    <?php endif;?>
 
-<ul>
-<?php foreach ($superheroes as $superhero): ?>
-  <li><?= $superhero['alias']; ?></li>
-<?php endforeach; ?>
-</ul>
+
+<?php endif;?>
